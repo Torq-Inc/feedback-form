@@ -17,7 +17,7 @@ const FeedbackComponent = () => {
     useEffect(() => {
         console.log(id);
         if (id && id !== "") {
-            mixpanel.identify(new URLSearchParams(window.location.search).get("id"))
+            mixpanel.identify(id)
             mixpanel.track("Uninstall")
         }
     }, [id])
