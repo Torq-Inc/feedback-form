@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import './FeedbackPage.css'; // Custom styles for the feedback page
 import mixpanel from "mixpanel-browser";
 import Success from "./Success";
+import {useLocation} from "react-router-dom";
 
 
 const FeedbackComponent = () => {
@@ -9,15 +10,17 @@ const FeedbackComponent = () => {
     const [reason, setReason] = useState("");
     const textAreaRef = useRef();
     const [success, setSuccess] = useState(false);
-    // get request params
-    const id = new URLSearchParams(window.location.search).get("id");
-    console.log(id);
-    useEffect(() => {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const id = searchParams.get('id');
 
+    useEffect(() => {
+        console.log(id);
         if (id && id !== "") {
             mixpanel.identify(new URLSearchParams(window.location.search).get("id"))
+            mixpanel.track("Uninstall")
         }
-    }, [])
+    }, [id])
 
     function feedbackHandler(e) {
         setFeedback(e)
@@ -37,9 +40,9 @@ const FeedbackComponent = () => {
 
         window.close()
         setSuccess(true)
-        setTimeout(()=>{
-            window.open("https://www.torq.live","_self")
-        },800)
+        setTimeout(() => {
+            window.open("https://www.torq.live", "_self")
+        }, 800)
     }
 
     return (
