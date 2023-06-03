@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './FeedbackPage.css'; // Custom styles for the feedback page
-import {useParams} from "react-router-dom";
 import mixpanel from "mixpanel-browser";
 import Success from "./Success";
 
@@ -10,13 +9,15 @@ const FeedbackComponent = () => {
     const [reason, setReason] = useState("");
     const textAreaRef = useRef();
     const [success, setSuccess] = useState(false);
-    const {id} = useParams();
+    // get request params
+    const id = new URLSearchParams(window.location.search).get("id");
+    console.log(id);
     useEffect(() => {
 
         if (id && id !== "") {
-            mixpanel.identify(id)
+            mixpanel.identify(new URLSearchParams(window.location.search).get("id"))
         }
-    }, [id])
+    }, [])
 
     function feedbackHandler(e) {
         setFeedback(e)
@@ -29,7 +30,7 @@ const FeedbackComponent = () => {
     function onSubmitHandler(e) {
         e.preventDefault();
         console.log(reason);
-        mixpanel.track("UNINSTALL", {
+        mixpanel.track("Uninstall", {
             rating: feedback,
             reason: reason
         })

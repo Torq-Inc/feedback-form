@@ -12,10 +12,6 @@ mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN, {
 
 
 function FeedbackRoute() {
-    useEffect(() => {
-        // Perform your action here when the route matches '/feedback'
-        window.open("https://www.torq.live","_self")
-    }, []);
 
     return <FeedbackComponent />;
 }
@@ -25,8 +21,8 @@ function App() {
         <Router>
             <Routes>
 
-                <Route path="/feedback/" element={<FeedbackRoute/>}/>
-                <Route path="/feedback/:id" element={<FeedbackComponent/>}/>
+                <Route path="/feedback" element={<FeedbackComponent/>}/>
+                {/*<Route path="/feedback/:id" element={<FeedbackComponent/>}/>*/}
 
             </Routes>
         </Router>
